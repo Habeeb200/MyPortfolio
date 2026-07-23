@@ -655,7 +655,9 @@
             <span class="modal-sub" id="modalSub">Role</span>
             <p id="modalDesc">Description</p>
             <div class="modal-tech" id="modalTech"></div>
-            <a href="#" id="modalLink" target="_blank" class="btn btn-primary" style="display:inline-block; margin-top:20px;">View project</a>
+            <a href="#" id="modalLink" target="_blank" class="btn btn-primary" style="display:inline-block; margin-top:20px;">
+                <i class="fas fa-external-link-alt" style="margin-right:8px;"></i>View Project
+            </a>
         </div>
     </div>
 
@@ -766,7 +768,9 @@
             modalDesc.textContent = p.desc;
             modalTech.innerHTML = p.tech.map(t => `<span>${t}</span>`).join('');
             modalLink.href = p.link;
-            modalLink.style.display = p.link && p.link !== '#' ? 'inline-block' : 'none';
+modalLink.target = '_blank';
+modalLink.rel = 'noopener noreferrer';
+modalLink.style.display = p.link && p.link !== '#' ? 'inline-flex' : 'none';
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -801,6 +805,18 @@
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
+modalLink.addEventListener('click', function(e) {
+    if (this.href && this.href !== '#') {
+        // Store the href before closing
+        const url = this.href;
+        // Close modal immediately
+        closeModal();
+        // Open in new tab after modal closes
+        setTimeout(() => {
+            window.open(url, '_blank');
+        }, 100);
+    }
+});
     </script>
 </body>
 </html>
